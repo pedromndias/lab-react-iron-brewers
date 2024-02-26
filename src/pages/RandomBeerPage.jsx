@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import beersJSON from "./../assets/beers.json";
+
+import axios from "axios"
 
 
 function RandomBeersPage() {
   // Mock initial state, to be replaced by data from the Beers API. Store the beer info retrieved from the Beers API in this state variable.
   const [randomBeer, setRandomBeer] = useState(beersJSON[0]);
+  const [isLoading, setIsLoading] = useState(true)
 
   // React Router hook for navigation. We use it for the back button. You can leave this as it is.
   const navigate = useNavigate();
@@ -17,7 +20,27 @@ function RandomBeersPage() {
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
 
+  const getData = async () => {
+    try {
+      setIsLoading(true)
+      const result = await axios.get("https://ih-beers-api2.herokuapp.com/beers/random")
+      console.log(result.data);
+      setRandomBeer(result.data)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error);
+      setIsLoading(true)
+    }
+  }
 
+  useEffect(() => {
+    getData()
+  }, [])
+
+
+  if (isLoading) {
+    return <p>...Loading</p>
+  }
 
   // The logic and the structure for the page showing the random beer. You can leave this as it is.
   return (

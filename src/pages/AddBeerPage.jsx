@@ -12,7 +12,7 @@ function AddBeerPage() {
     firstBrewed: "",
     brewersTips: "",
     attenuationLevel: 0,
-    contributedBy: ""
+    contributed_by: ""
   });
   const [isLoading, setIsLoading] = useState(false)
 
@@ -57,7 +57,7 @@ function AddBeerPage() {
       firstBrewed: "",
       brewersTips: "",
       attenuationLevel: 0,
-      contributedBy: ""
+      contributed_by: ""
     })
   }
 
@@ -154,7 +154,7 @@ function AddBeerPage() {
             type="text"
             name="contributedBy"
             placeholder="Contributed by"
-            value={newBeer.contributedBy}
+            value={newBeer.contributed_by}
             onChange={handleFormChange}
           />
           <button className="btn btn-primary btn-round">Add Beer</button>
