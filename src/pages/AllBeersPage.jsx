@@ -1,22 +1,40 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "../components/Search";
 import beersJSON from "./../assets/beers.json";
+import axios from "axios"
 
 
 
 function AllBeersPage() {
   // Mock initial state, to be replaced by data from the API. Once you retrieve the list of beers from the Beers API store it in this state variable.
   const [beers, setBeers] = useState(beersJSON);
-
-
+  const [isLoading, setIsLoading] = useState(true)
 
   // TASKS:
   // 1. Set up an effect hook to make a request to the Beers API and get a list with all the beers.
   // 2. Use axios to make a HTTP request.
   // 3. Use the response data from the Beers API to update the state variable.
 
+  const getData = async () => {
+    try {
+      setIsLoading(true)
+      const response = await axios.get("https://ih-beers-api2.herokuapp.com/beers")
+      // console.log(response.data);
+      setBeers(response.data)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error);
+      setIsLoading(true)
+    }
+  }
 
+  useEffect(() => {
+    getData()
+  }, [])
+
+
+  if(isLoading) return <p>Loading...</p>
 
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
